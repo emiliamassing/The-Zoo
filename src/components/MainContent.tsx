@@ -1,5 +1,13 @@
+import { Outlet } from "react-router-dom";
+
 export function MainContent() {
-    return (
-        <h1>Welcome To The Zoo!</h1>
+    return(
+        <>
+            <header>Header</header>
+            <main>
+                <Outlet></Outlet>
+            </main>
+            <footer>Footer</footer>
+        </>  
     );
 }
