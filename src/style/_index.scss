@@ -1,11 +1,13 @@
+@use './utils/variables' as var;
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var.$textColor;
+  background-image: url(../assets/wallpaper.jpg);
+  background-size: cover;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,21 +16,57 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+body {
+  font-family: var.$fontFamily;
+  margin: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+
+  a{
+    color: var.$textColor;
+    text-decoration: none;
+  }
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+header {
+  nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    font-family: var.$fontFamily;
+
+    i{
+      margin-top: 1rem;
+      margin-left: 1rem;
+      font-size: 3em;
+      vertical-align: middle;
+    }
+
+    span {
+      position: absolute;
+      font-size: 2rem;
+      left: 5.3rem;
+      top: 1.2rem;
+    }
+
+    ul {
+      display: flex;
+      margin-right: 2.5em;
+      li {
+        list-style-type: none;
+        margin-left: 3em;
+
+        a{
+          font-size: 1.5rem;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
 }
 
 h1 {
