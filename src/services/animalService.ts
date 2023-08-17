@@ -1,9 +1,10 @@
-import { IAnimal } from "../models/IAnimal";
 import { get } from "./serviceBase";
+import { IAnimal } from "../models/IAnimal";
 
-const BASEURL: string = import.meta.env.BASE_URL;
+const BASEURL = import.meta.env.VITE_ANIMAL_API_URL;
 
-export const getAnimals = async () => {
-    const response = await get<IAnimal>(`${BASEURL}`);
-    return response.name;
+export async function getAnimals() {
+    const response = await get<IAnimal[]>(`${BASEURL}`);
+    console.log(response);
+    return response;
 }

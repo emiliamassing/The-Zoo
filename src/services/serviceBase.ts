@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const get = async<T>(url: string) =>{
+export async function get<T>(url: string)  {
     const response = await axios.get<T>(url);
     return response.data;
-};
+}
