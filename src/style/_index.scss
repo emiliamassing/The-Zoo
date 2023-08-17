@@ -74,10 +74,68 @@ main {
   width: 90%;
   margin: 0 auto;
 
+  :is(h1, h2, h3, h4, h5, h6) {
+    text-align: center;
+  }
+
   h1 {
     font-size: 3.2em;
     line-height: 1.1;
-    text-align: center;
+  }
+
+  h2 {
+    font-size: 2.4em;
+  }
+
+  .animalContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .animalCard {
+      background-color: var.$darkGreenColor;
+      box-shadow: 0 0.5rem 1.2rem rgba(0, 0, 0, 0.664);
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      padding: 2em;
+      height: 32em;
+      width: 22em;
+      margin: 2em;
+
+      img {
+        height: 15em;
+        width: 20em;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .isFedIcons, .isNotFedIcons {
+        display: flex;
+        justify-content: center;
+        padding: 1.5em;
+
+        i {
+          margin: 2px;
+        }
+      }
+
+      .isNotFedIcons {
+        
+        .faded {
+          color: #dedede18
+        }
+      }
+
+      button {
+        width: 70%
+      }
+    }
   }
 }
 
@@ -99,12 +157,12 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var.$buttonColor;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #5d9e55;
 }
 button:focus,
 button:focus-visible {

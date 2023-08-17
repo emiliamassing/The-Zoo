@@ -4,9 +4,9 @@ export interface IAnimal {
     isFed: boolean,
     lastFed: string,
     latinName: string,
-    longDesc: string,
+    longDescription: string,
     medicine: string, 
     name: string,
-    shortDesc: string,
+    shortDescription: string,
     yearOfBirth: number 
 }

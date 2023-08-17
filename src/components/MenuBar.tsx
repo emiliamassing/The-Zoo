@@ -7,10 +7,10 @@ export function MenuBar() {
             <span>The Zoo</span>
             <ul>
                 <li>
-                    <Link to="/">Home</Link>
+                    <Link to="/">Start</Link>
                 </li>
                 <li>
-                    <Link to="/animals">Animal Overview</Link>
+                    <Link to="/animals">Djuröversikt</Link>
                 </li>
             </ul>
         </nav>
