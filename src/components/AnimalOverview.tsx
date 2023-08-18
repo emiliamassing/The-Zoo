@@ -3,26 +3,25 @@ import { getAnimals } from "../services/animalService";
 import { IAnimal } from "../models/IAnimal";
 import { AnimalsContainer } from "./AnimalsContainer";
 
-//Lagra och hämta djur med Localstorage istället
-
 export function AnimalOverview() {
     const [animals, setAnimals] = useState<IAnimal[]>([]);
 
-    async function fetchAnimals() {
-        const data = await getAnimals();
-        
-        setAnimals(data);
-    }
-
-    console.log('Animals:', animals);
-
     useEffect(() => {
-        if(animals.length < 1) {
-            fetchAnimals();
-        } else {
-            console.log('djur hämtade');
+        const localAnimals = localStorage.getItem('animals');
+
+        async function fetchAnimals() {
+            const data = await getAnimals();
+            
+            localStorage.setItem('animals', JSON.stringify(data));
+            setAnimals(data);
         }
-    })
+
+        if(localAnimals) {
+            setAnimals(JSON.parse(localAnimals));
+        } else {
+            fetchAnimals();
+        }
+    }, []);
 
     return(
         <>
