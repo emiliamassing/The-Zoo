@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { IAnimal } from "../models/IAnimal"
 
 interface IAnimalProps {
@@ -5,11 +6,16 @@ interface IAnimalProps {
 }
 
 export function AnimalsContainer({animalList}: IAnimalProps) {
-    console.log(animalList, 'Correctly sent props');
-    const animalCard = animalList.map((animal, i) => {
+    const navigate =  useNavigate();
+    
+    function directToPage(id: number) {
+       navigate(`/animals/${id}`);
+    }
+
+    const animalCard = animalList.map((animal) => {
         return(
-            <div className="animalCard" key={i}>
-                <img src={animal.imageUrl}></img>
+            <div className="animalCard" key={animal.id}>
+                <img src={animal.imageUrl} alt={animal.name}></img>
                 <h3>{animal.name}</h3>
                 <p>{animal.shortDescription}</p>
                 <div className="hungerStatus">
@@ -25,7 +31,7 @@ export function AnimalsContainer({animalList}: IAnimalProps) {
                     </div>
                     }
                 </div>
-                <button>Läs Mer</button>
+                <button onClick={() => directToPage(animal.id)}>Läs Mer</button>
             </div>
         )
     });

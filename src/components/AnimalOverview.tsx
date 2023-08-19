@@ -7,6 +7,7 @@ export function AnimalOverview() {
     const [animals, setAnimals] = useState<IAnimal[]>([]);
 
     useEffect(() => {
+        localStorage.removeItem('animalInfo');
         const localAnimals = localStorage.getItem('animals');
 
         async function fetchAnimals() {
