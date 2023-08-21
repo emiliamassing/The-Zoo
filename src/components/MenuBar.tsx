@@ -4,7 +4,7 @@ export function MenuBar() {
     return (
         <nav>
             <i className="fa-solid fa-otter"></i>
-            <span>The Zoo</span>
+            <span>Nordiska Djurriket</span>
             <ul>
                 <li>
                     <Link to="/">Start</Link>
