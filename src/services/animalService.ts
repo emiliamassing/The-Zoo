@@ -7,8 +7,3 @@ export async function getAnimals() {
     const response = await get<IAnimal[]>(`${BASEURL}`);
     return response;
 }
-
-export async function getAnimalById(id: string) {
-    const response = await get<IAnimal[]>(`${BASEURL}/${id}`);
-    return response;
-}

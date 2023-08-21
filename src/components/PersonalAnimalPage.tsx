@@ -1,35 +1,32 @@
 import { useParams } from "react-router-dom"
-import { getAnimalById } from "../services/animalService";
 import { useEffect, useState } from "react";
 import { IAnimal } from "../models/IAnimal";
 
 export function PersonalAnimalPage() {
     const { id }  = useParams();
     const [animalInfo, setAnimalInfo] = useState<IAnimal[]>([]);
-    const localAnimalInfo = localStorage.getItem('animalInfo');
+    const localAnimals = localStorage.getItem('animals');
 
     useEffect(() => {
-        async function fetchAnimalById() {
-            if(id !== undefined) {
-                const data =  await getAnimalById(id);
-
-                localStorage.setItem('animalInfo', JSON.stringify(data));
-                setAnimalInfo(data);
-            }
+        if(localAnimals && animalInfo.length === 0) {
+            setAnimalInfo(JSON.parse(localAnimals));
         }
+    }, [localAnimals, animalInfo.length]);
+    
+    const chosenAnimal = animalInfo.filter((animal) => animal.id === Number(id));
+    console.log('Chosen Animal', chosenAnimal);
 
-        if(localAnimalInfo) {
-            setAnimalInfo([JSON.parse(localAnimalInfo)]);
-        } else {
-            fetchAnimalById();
-        }
-    }, [id, localAnimalInfo]);
-
-    const animalInformation = animalInfo.map((animal) => {
+    const animalInformation = chosenAnimal.map((animal) => {
         return(
-            <section className="personalAnimalContainer" key={animal.id}>
+            <div className="personalAnimalContainer" key={animal.id}>
                 <h2>{animal.name}</h2>
                 <img src={animal.imageUrl}></img>
+                <div className="generalAnimalInfo">
+                    <p className="latinName">{animal.latinName}</p>
+                    <p className="longDesc">{animal.longDescription}</p>
+                </div>
+                <p>Född: {animal.yearOfBirth}</p>
+                <p>Mediciner: {animal.medicine}</p>
                 <div className="hungerStatus">
                     {animal.isFed ?
                     <div className="isFedIcons">
@@ -43,21 +40,14 @@ export function PersonalAnimalPage() {
                     </div>
                     }
                 </div>
-                <div className="generalAnimalInfo">
-                    <p className="latinName">{animal.latinName}</p>
-                    <p>{animal.longDescription}</p>
-                </div>
-                <p>Född: {animal.yearOfBirth}</p>
-                <p>Mediciner: {animal.medicine}</p>
                 <p>Senast Matad: {animal.lastFed}</p>
                 <button>Mata {animal.name}</button>
-            </section>
+            </div>
         )
     });
 
     return(
         <>
-            <h3>Animal: {id}</h3>
             {animalInformation}
         </>
     )
