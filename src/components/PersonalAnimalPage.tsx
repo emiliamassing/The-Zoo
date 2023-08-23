@@ -9,6 +9,7 @@ export function PersonalAnimalPage() {
     const localAnimals = localStorage.getItem('animals');
     const chosenAnimal = animalInfo.filter((animal) => animal.id === Number(id));
     const animalIndex = animalInfo.findIndex(animal => animal.id === Number(id));
+    const currentTime = new Date();
 
     useEffect(() => {
         if(localAnimals && animalInfo.length === 0) {
@@ -17,13 +18,11 @@ export function PersonalAnimalPage() {
     }, [localAnimals, animalInfo]);
 
     function feedAnimal() {
-        const date = new Date();
-        
         if(animalIndex !== -1) {
             const updatedAnimalInfo = [...animalInfo];
 
             updatedAnimalInfo[animalIndex].isFed = true;
-            updatedAnimalInfo[animalIndex].lastFed = date.toISOString();
+            updatedAnimalInfo[animalIndex].lastFed = currentTime.toISOString();
 
             setAnimalInfo(updatedAnimalInfo);
 
@@ -33,13 +32,12 @@ export function PersonalAnimalPage() {
 
     useEffect(() => {
         if(chosenAnimal.length !== 0 && (animalInfo[animalIndex].isFed === true)) {
-            getTimeSinceLastFed(chosenAnimal[0].lastFed);
+            checkIfThreeHoursHavePassed(chosenAnimal[0].lastFed);
         }
     });
 
-    function getTimeSinceLastFed(lastFed: string) {
+    function checkIfThreeHoursHavePassed(lastFed: string) {
         const lastFedTime = new Date(lastFed);
-        const currentTime = new Date();
         const timeDifferenceInMilliseconds = currentTime.getTime() - lastFedTime.getTime();
         const hoursPassed = timeDifferenceInMilliseconds / (1000 * 60 * 60);
 
