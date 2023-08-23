@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { IAnimal } from "../models/IAnimal";
 import errorImage from "../assets/errorImage.png";
+import { alertIfFourHoursHavePassed } from "../services/animalService";
 
 export function PersonalAnimalPage() {
     const { id }  = useParams();
@@ -31,6 +32,8 @@ export function PersonalAnimalPage() {
     }
 
     useEffect(() => {
+        alertIfFourHoursHavePassed(chosenAnimal);
+
         if(chosenAnimal.length !== 0 && (animalInfo[animalIndex].isFed === true)) {
             checkIfThreeHoursHavePassed(chosenAnimal[0].lastFed);
         }

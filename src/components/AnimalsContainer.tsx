@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { IAnimal } from "../models/IAnimal";
 import errorImage from "../assets/errorImage.png";
 import { useEffect } from "react";
+import { alertIfFourHoursHavePassed } from "../services/animalService";
 
 interface IAnimalProps {
     animalList: IAnimal[]
@@ -11,31 +12,11 @@ export function AnimalsContainer({animalList}: IAnimalProps) {
     const navigate =  useNavigate();
     
     useEffect(() => {
-        checkIfFourHoursHavePassed();
-    })
+        alertIfFourHoursHavePassed(animalList);
+    });
 
     function directToPage(id: number) {
        navigate(`/animals/${id}`);
-    }
-
-    function checkIfFourHoursHavePassed() {
-        const currentTime = new Date();
-        const animalsRequiringFood: string[]= [];
-
-        animalList.forEach((animal) => {
-            const lastFedTime = new Date(animal.lastFed);
-            const timeDifferenceInMilliseconds = currentTime.getTime() - lastFedTime.getTime();
-            const hoursPassed = timeDifferenceInMilliseconds / (1000 * 60 * 60)
-
-            if(hoursPassed >=4) {
-                animalsRequiringFood.push(animal.name);
-            }
-        });
-
-        if(animalsRequiringFood.length > 0) {
-            const mentionAllAnimals = animalsRequiringFood.join(', ');
-            alert(`Följande djur är hungriga och har inte fått mat på över 4h: ${mentionAllAnimals}`);
-        }
     }
 
     const animalCard = animalList.map((animal) => {
