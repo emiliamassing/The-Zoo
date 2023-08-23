@@ -8,27 +8,50 @@ export function PersonalAnimalPage() {
     const [animalInfo, setAnimalInfo] = useState<IAnimal[]>([]);
     const localAnimals = localStorage.getItem('animals');
     const chosenAnimal = animalInfo.filter((animal) => animal.id === Number(id));
+    const animalIndex = animalInfo.findIndex(animal => animal.id === Number(id));
 
     useEffect(() => {
         if(localAnimals && animalInfo.length === 0) {
             setAnimalInfo(JSON.parse(localAnimals));
         }
-    }, [localAnimals, animalInfo.length]);
+    }, [localAnimals, animalInfo]);
 
     function feedAnimal() {
-        const animalIndex = animalInfo.findIndex(animal => animal.id === Number(id));
         const date = new Date();
-        console.log(animalIndex);
         
         if(animalIndex !== -1) {
             const updatedAnimalInfo = [...animalInfo];
 
             updatedAnimalInfo[animalIndex].isFed = true;
-            updatedAnimalInfo[animalIndex].lastFed = date.toString();
+            updatedAnimalInfo[animalIndex].lastFed = date.toISOString();
 
             setAnimalInfo(updatedAnimalInfo);
 
             localStorage.setItem('animals', JSON.stringify(updatedAnimalInfo));
+        }
+    }
+
+    useEffect(() => {
+        if(chosenAnimal.length !== 0 && (animalInfo[animalIndex].isFed === true)) {
+            getTimeSinceLastFed(chosenAnimal[0].lastFed);
+        }
+    });
+
+    function getTimeSinceLastFed(lastFed: string) {
+        const lastFedTime = new Date(lastFed);
+        const currentTime = new Date();
+        const timeDifferenceInMilliseconds = currentTime.getTime() - lastFedTime.getTime();
+        const hoursPassed = timeDifferenceInMilliseconds / (1000 * 60 * 60);
+
+        if(hoursPassed >= 3) {
+            const updatedAnimalInfo = [...animalInfo];
+            updatedAnimalInfo[animalIndex].isFed = false;
+            setAnimalInfo(updatedAnimalInfo);
+
+            localStorage.setItem('animals', JSON.stringify(updatedAnimalInfo));
+            console.log('3h har passerat');
+        } else {
+            console.log('Mindre än 3h har gått');
         }
     }
 
